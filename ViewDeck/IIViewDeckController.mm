@@ -361,7 +361,7 @@ static inline BOOL IIIsAllowedTransition(IIViewDeckSide fromSide, IIViewDeckSide
             } else if (recognizer == self.rightEdgeGestureRecognizer) {
                 side = IIViewDeckSideRight;
             } else {
-                NSAssert(NO, @"A gesture recognizer (%@) triggered an interactive view transition that is not controlled by this istance of %@, (%@).", recognizer, NSStringFromClass(self.class), self);
+                NSAssert3(NO, @"A gesture recognizer (%@) triggered an interactive view transition that is not controlled by this istance of %@, (%@).", recognizer, NSStringFromClass(self.class), self);
                 return;
             }
 
