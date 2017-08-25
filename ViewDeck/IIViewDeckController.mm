@@ -227,7 +227,7 @@ II_DELEGATE_PROXY(IIViewDeckControllerDelegate);
 
 #pragma mark - Managing Transitions
 
-static inline BOOL IIIsAllowedTransition(IIViewDeckSide fromSide, IIViewDeckSide toSide) {
+__unused static inline BOOL IIIsAllowedTransition(IIViewDeckSide fromSide, IIViewDeckSide toSide) {
     return (fromSide == toSide) || (IIViewDeckSideIsValid(fromSide) && !IIViewDeckSideIsValid(toSide)) || (!IIViewDeckSideIsValid(fromSide) && IIViewDeckSideIsValid(toSide));
 }
 
@@ -236,7 +236,11 @@ static inline BOOL IIIsAllowedTransition(IIViewDeckSide fromSide, IIViewDeckSide
 }
 
 - (void)openSide:(IIViewDeckSide)side animated:(BOOL)animated {
-    [self openSide:side animated:animated notify:YES completion:NULL];
+    [self openSide:side animated:animated completion:NULL];
+}
+
+- (void)openSide:(IIViewDeckSide)side animated:(BOOL)animated completion:(nullable void(^)(BOOL cancelled))completion {
+    [self openSide:side animated:animated notify:YES completion:completion];
 }
 
 - (void)openSide:(IIViewDeckSide)side animated:(BOOL)animated notify:(BOOL)notify completion:(nullable void(^)(BOOL cancelled))completion {
@@ -319,7 +323,11 @@ static inline BOOL IIIsAllowedTransition(IIViewDeckSide fromSide, IIViewDeckSide
 }
 
 - (void)closeSide:(BOOL)animated {
-    [self closeSide:animated notify:YES completion:NULL];
+    [self closeSide:animated completion:NULL];
+}
+
+- (void)closeSide:(BOOL)animated completion:(nullable void(^)(BOOL cancelled))completion {
+    [self openSide:IIViewDeckSideNone animated:animated notify:YES completion:completion];
 }
 
 - (void)closeSide:(BOOL)animated notify:(BOOL)notify completion:(nullable void(^)(BOOL cancelled))completion {
